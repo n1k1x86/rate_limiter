@@ -21,6 +21,8 @@ func NewApp(cfg *config.App) *App {
 		IdleTimeout:  cfg.IdleTimeout.Time,
 	})
 
+	regHandlers(app)
+
 	return &App{
 		app:  app,
 		addr: cfg.Addr,
@@ -44,4 +46,8 @@ func (a *App) Stop(ctx context.Context) error {
 		return err
 	}
 	return nil
+}
+
+func regHandlers(app *fiber.App) {
+	app.Post("/allow", AllowHandler())
 }
